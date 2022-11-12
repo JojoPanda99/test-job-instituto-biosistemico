@@ -1,0 +1,16 @@
+{
+  "person": [
+    {
+      "name": "Joao Victor Sousa",
+      "email": "jojo@email.com",
+      "phone": "+55 61 998168306",
+      "professionId": 1
+    }
+  ],
+  "profession": [
+    {
+      "id": 1,
+      "name": "Student"
+    }
+  ]
+}
