@@ -1,0 +1,22 @@
+<div class="card py-3 my-3">
+  <div class="card-body row ">
+    <div class=" col-auto">
+      <img style="width: 200px; height: auto;" alt="person image"
+           src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg" class="card-img-top"/>
+    </div>
+    <div class="col text-left ">
+      <div class="row border-bottom"><p class="fs-3">{{person.name}}</p></div>
+      <div *ngIf="operation.toUpperCase() == 'VIEW'">
+        <div class="row"><p class="fs-3"><label class="pe-2">Email:</label>{{person.email}}</p></div>
+        <div class="row"><p class="fs-3"><label class="pe-2">Phone:</label>{{person.phone}}</p></div>
+      </div>
+      <div class="row"><p class="fs-3"><label class="pe-2">Profession:</label>{{person.profession.name}}</p></div>
+    </div>
+  </div>
+  <button *ngIf="operation.toUpperCase() == 'LIST'" [routerLink]="['./detail-person/', person.id]" class="btn btn-primary align-self-end mx-2">
+    Read more<i class="bi bi-chevron-double-right"></i>
+  </button>
+  <button *ngIf="operation.toUpperCase() == 'VIEW'" class="btn btn-danger align-self-end mx-2">
+    Delete person
+  </button>
+</div>

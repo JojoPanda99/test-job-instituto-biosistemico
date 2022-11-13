@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {PersonService} from "../services/person.service";
-import {PersonModel} from "../interfaces/person.interface";
+import {PersonService} from "../../services/person.service";
+import {PersonModel} from "../../interfaces/person.interface";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -10,7 +11,7 @@ import {PersonModel} from "../interfaces/person.interface";
 })
 export class ListEmployersComponent implements OnInit {
 
-  constructor(private personService: PersonService) {
+  constructor(private activatedRoute: ActivatedRoute, private personService: PersonService) {
   }
 
   persons: Array<PersonModel> = new Array<PersonModel>();

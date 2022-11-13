@@ -14,4 +14,8 @@ export class PersonService {
   findAll() {
     return this.httpRequest.get<Array<PersonModel>>(`${this.BASE_URL}/persons?_expand=profession`)
   }
+
+  findOne(id: number) {
+    return this.httpRequest.get<Array<PersonModel>>(`${this.BASE_URL}/persons?id=${id}&_expand=profession`);
+  }
 }

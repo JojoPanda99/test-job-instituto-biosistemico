@@ -5,7 +5,7 @@ export interface PersonModel {
   email: string;
   professionId: number;
   profession: {
-    id?: number;
+    id: number;
     name: string;
   }
 }
