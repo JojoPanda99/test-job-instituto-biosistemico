@@ -1,16 +1,33 @@
 {
-  "person": [
+  "persons": [
     {
-      "name": "Joao Victor Sousa",
       "email": "jojo@email.com",
+      "name": "Joao Victor Sousa de Oliveira",
       "phone": "+55 61 998168306",
-      "professionId": 1
+      "professionId": 2,
+      "id": 2
     }
   ],
-  "profession": [
+  "professions": [
     {
       "id": 1,
       "name": "Student"
+    },
+    {
+      "id": 2,
+      "name": "Developer"
+    },
+    {
+      "id": 3,
+      "name": "Designer"
+    },
+    {
+      "name": "Artist",
+      "id": 4
+    },
+    {
+      "name": "Streamer",
+      "id": 5
     }
   ]
 }

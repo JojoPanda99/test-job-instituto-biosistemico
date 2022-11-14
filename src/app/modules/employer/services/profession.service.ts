@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ProfessionModel} from "../interfaces/profession.interface";
 
@@ -7,9 +7,18 @@ import {ProfessionModel} from "../interfaces/profession.interface";
 })
 export class ProfessionService {
   private _BASE_URL = 'http://localhost:3000';
-  constructor(private httpRequest: HttpClient) { }
 
-  findAll(){
+  constructor(private httpRequest: HttpClient) {
+  }
+
+  findAll() {
     return this.httpRequest.get<Array<ProfessionModel>>(`${this._BASE_URL}/professions`)
+  }
+
+  create(professionName: string): ProfessionModel {
+    let professionCreated: ProfessionModel = {id: 0, name: ""};
+    this.httpRequest.post<ProfessionModel>(`${this._BASE_URL}/professions`, {name: professionName})
+      .subscribe(value => professionCreated = value);
+    return professionCreated;
   }
 }

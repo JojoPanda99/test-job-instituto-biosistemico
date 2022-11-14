@@ -13,10 +13,35 @@
       <div class="row"><p class="fs-3"><label class="pe-2">Profession:</label>{{person.profession.name}}</p></div>
     </div>
   </div>
-  <button *ngIf="operation.toUpperCase() == 'LIST'" [routerLink]="['./detail-person/', person.id]" class="btn btn-primary align-self-end mx-2">
+  <button *ngIf="operation.toUpperCase() == 'LIST'" [routerLink]="['./detail-person/', person.id]"
+          class="btn btn-primary align-self-end mx-2">
     Read more<i class="bi bi-chevron-double-right"></i>
   </button>
-  <button *ngIf="operation.toUpperCase() == 'VIEW'" class="btn btn-danger align-self-end mx-2">
+  <button style="width: 125px" *ngIf="operation.toUpperCase() == 'VIEW'" [routerLink]="['../../edit/', person.id]"
+          class="btn btn-success align-self-end mx-2 mb-3">
+    Edit
+  </button>
+  <button *ngIf="operation.toUpperCase() == 'VIEW'" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          class="btn btn-danger align-self-end mx-2">
     Delete person
   </button>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Person</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want delete this user?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onDelete(person.id)">Delete</button>
+      </div>
+    </div>
+  </div>
 </div>

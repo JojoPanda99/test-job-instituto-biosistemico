@@ -9,6 +9,7 @@ const routes: Routes = [
   {path: '', component: ListEmployersComponent},
   {path: 'detail-person/:id', component: DetailPersonComponent},
   {path: 'create', component: FormPersonComponent},
+  {path: 'edit/:id', component: FormPersonComponent},
 ]
 
 @NgModule({

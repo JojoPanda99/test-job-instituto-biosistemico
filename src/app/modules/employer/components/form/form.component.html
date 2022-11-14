@@ -1,0 +1,57 @@
+<div class="container">
+  <app-card-person *ngFor="let personPreview of personPreviews" [person]="personPreview"
+                   operation="FORM"></app-card-person>
+  <form (ngSubmit)="onSubmit()" [formGroup]="formPerson" (change)="onChanges()">
+    <div class="row form-group">
+      <div class="col">
+        <div class="mb-3">
+          <label for="person-name" class="form-label">Person Name</label>
+          <input type="string" formControlName="name" class="form-control" id="person-name" placeholder="Name Surname">
+        </div>
+      </div>
+      <div class="col">
+        <div class="mb-3">
+          <label for="person-email" class="form-label">Email address</label>
+          <input type="email" formControlName="email" class="form-control" id="person-email"
+                 placeholder="name@example.com">
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col">
+        <div class="mb-3">
+          <label for="person-phone" class="form-label">Phone number</label>
+          <input type="text" formControlName="phone" class="form-control" id="person-phone"
+                 placeholder="(011) 9 9090 8080">
+        </div>
+      </div>
+      <div class="col" *ngIf="!formPerson.value.haveToCreateJob">
+        <div class="mb-3">
+          <label for="person-job" class="form-label">Job</label>
+          <select type="string" formControlName="profession" class="form-control" id="person-job">
+            <option *ngFor="let profession of professionsList" [value]="profession.id">{{profession.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col" *ngIf="formPerson.value.haveToCreateJob">
+        <div class="mb-3">
+          <label for="person-job" class="form-label">New job name</label>
+          <input type="text" formControlName="newJobName" class="form-control" id="new-job"/>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="py-4 text-center">
+          <input type="checkbox" class="btn-check form-control" id="new-profession" formControlName="haveToCreateJob"
+                 autocomplete="false">
+          <label class="btn btn-outline-danger"
+                 for="new-profession">{{!formPerson.value.haveToCreateJob ? 'Need Create new profession?' : 'Ok, digit new profession name'}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col text-center">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
