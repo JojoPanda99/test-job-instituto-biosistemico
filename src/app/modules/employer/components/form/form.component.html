@@ -1,6 +1,6 @@
 <div class="container">
-  <app-card-person *ngFor="let personPreview of personPreviews" [person]="personPreview"
-                   operation="FORM"></app-card-person>
+    <app-card-person *ngFor="let personPreview of personPreviews" [personEntity]="personPreview"
+                     operation="FORM"></app-card-person>
   <form (ngSubmit)="onSubmit()" [formGroup]="formPerson" (change)="onChanges()">
     <div class="row form-group">
       <div class="col">

@@ -20,8 +20,7 @@ export class ProfessionController {
 
     async remove(request: Request, response: Response, next: NextFunction) {
         let userToRemove = await this.professionRepository.findOneBy({id: +request.params.id})
-        await this.professionRepository.remove(userToRemove)
-        return null;
+        return await this.professionRepository.remove(userToRemove)
     }
 
 }

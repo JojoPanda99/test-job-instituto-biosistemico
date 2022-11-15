@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {PersonService} from "../../services/person.service";
-import {PersonModel} from "../../interfaces/person.interface";
+import {PersonEntity} from "../../interfaces/person.entity.interface";
 
 @Component({
   selector: 'app-detail-person',
@@ -13,24 +13,22 @@ export class DetailPersonComponent implements OnInit {
   constructor(private route: ActivatedRoute, private personService: PersonService) {
   }
 
-  personDetails: PersonModel = {
+  personDetails: PersonEntity = {
     id: 0,
     name: "",
     email: "",
     phone: "",
-    professionId: 0,
-    profession: {id: 0, name: ""}
+    profession: {
+      id:0,
+      name:""
+    }
   }
-  isLoaded = false;
 
   ngOnInit(): void {
-    this.route.params.subscribe(async params => await this.findPerson(+params['id']));
+    this.route.params.subscribe(params => this.findPerson(+params['id']));
   }
 
   private async findPerson(personId: number) {
-    this.personService.findOne(personId).subscribe({
-      next:(value) => this.personDetails = value[0],
-      complete: () => this.isLoaded = true
-    });
+    this.personDetails = await this.personService.findOne(personId)
   }
 }

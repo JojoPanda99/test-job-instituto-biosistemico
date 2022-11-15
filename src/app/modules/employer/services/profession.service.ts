@@ -6,19 +6,17 @@ import {ProfessionModel} from "../interfaces/profession.interface";
   providedIn: 'root'
 })
 export class ProfessionService {
-  private _BASE_URL = 'http://localhost:3000';
 
   constructor(private httpRequest: HttpClient) {
   }
 
   findAll() {
-    return this.httpRequest.get<Array<ProfessionModel>>(`${this._BASE_URL}/professions`)
+    const professionsList: Array<ProfessionModel> = []
+    this.httpRequest.get<Array<ProfessionModel>>(`api/professions`).subscribe(value => professionsList.push(...value))
+    return professionsList
   }
 
-  create(professionName: string): ProfessionModel {
-    let professionCreated: ProfessionModel = {id: 0, name: ""};
-    this.httpRequest.post<ProfessionModel>(`${this._BASE_URL}/professions`, {name: professionName})
-      .subscribe(value => professionCreated = value);
-    return professionCreated;
+  async create(professionName: string): Promise<ProfessionModel> {
+    return await this.httpRequest.post<ProfessionModel>(`/api/professions`, {name: professionName}).toPromise();
   }
 }

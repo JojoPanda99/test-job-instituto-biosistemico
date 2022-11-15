@@ -1,4 +1,3 @@
-import {ProfessionModel} from "./profession.interface";
 
 export interface PersonModel {
   id: number;
@@ -6,5 +5,4 @@ export interface PersonModel {
   phone: string;
   email: string;
   professionId: number;
-  profession: ProfessionModel;
 }

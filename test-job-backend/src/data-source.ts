@@ -11,5 +11,4 @@ export const AppDataSource = new DataSource({
     entities: [PersonEntity, ProfessionEntity],
     migrations: ['./src/migrations/*.ts'],
     subscribers: [],
-    relationLoadStrategy: "join"
 })

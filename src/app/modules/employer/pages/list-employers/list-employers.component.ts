@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PersonService} from "../../services/person.service";
-import {PersonModel} from "../../interfaces/person.interface";
 import {ActivatedRoute} from "@angular/router";
+import {PersonEntity} from "../../interfaces/person.entity.interface";
 
 
 @Component({
@@ -14,16 +14,10 @@ export class ListEmployersComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private personService: PersonService) {
   }
 
-  persons: Array<PersonModel> = new Array<PersonModel>();
+  persons: Array<PersonEntity> = new Array<PersonEntity>();
 
-  ngOnInit(): void {
-    this.personService.findAll().subscribe({
-      next: value => this.persons = value,
-    });
-  }
-
-  consola() {
-    console.log(this.persons)
+  async ngOnInit(): Promise<void> {
+    this.persons = await this.personService.findAll()
   }
 
 }

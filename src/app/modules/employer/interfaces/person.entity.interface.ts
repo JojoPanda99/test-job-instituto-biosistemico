@@ -1,7 +1,9 @@
+import {ProfessionModel} from "./profession.interface";
+
 export interface PersonEntity {
-  id?: number;
+  id: number;
   name: string;
   email: string;
   phone: string;
-  professionId: number;
+  profession: ProfessionModel;
 }

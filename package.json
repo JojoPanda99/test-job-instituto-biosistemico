@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "dev": "concurrently \"ng serve\"  \"cd ./test-job-backend & npm run start\""
+    "dev": "concurrently \"ng serve --proxy-config proxy.config.js\"  \"cd ./test-job-backend & npm run start\""
   },
   "private": true,
   "dependencies": {

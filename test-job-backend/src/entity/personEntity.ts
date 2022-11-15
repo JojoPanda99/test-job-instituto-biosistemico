@@ -1,4 +1,4 @@
-import {JoinColumn, Entity, PrimaryGeneratedColumn, Column, OneToOne} from "typeorm"
+import {JoinColumn, Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm"
 import {ProfessionEntity} from "./professionEntity";
 @Entity()
 export class PersonEntity{
@@ -13,7 +13,7 @@ export class PersonEntity{
     @Column()
     phone: string
 
-    @OneToOne(() => ProfessionEntity)
+    @ManyToOne(() => ProfessionEntity)
     @JoinColumn()
     profession: ProfessionEntity
 

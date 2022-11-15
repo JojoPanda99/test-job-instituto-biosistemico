@@ -14,13 +14,10 @@ import {PersonEntity} from "../../interfaces/person.entity.interface";
 })
 export class FormComponent implements OnInit, OnChanges {
 
-  @Input() personEdit: PersonModel = {
-    email: "", id: 0, name: "", phone: "", profession: {id: 0, name: ''}, professionId: 0
-  }
   formPerson = new FormGroup(
     {
       email: new FormControl(''),
-      id: new FormControl(0),
+      id: new FormControl(null),
       name: new FormControl(''),
       phone: new FormControl(''),
       profession: new FormControl(''),
@@ -32,63 +29,78 @@ export class FormComponent implements OnInit, OnChanges {
 
 
   professionsList: Array<ProfessionModel> = new Array<ProfessionModel>();
-  personPreviews: Array<PersonModel> = [{
-    email: "", id: 0, name: "", phone: "", profession: {id: 0, name: ""}, professionId: 0
-  }];
+  personPreviews: Array<PersonEntity> = [];
+  isLoaded = false
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private professionService: ProfessionService,
     private personService: PersonService
   ) {
+    this.professionsList = this.professionService.findAll();
+  }
+
+  ngOnInit(): void {
+    if (this.operation.toUpperCase() == "EDIT") {
+      this.activatedRoute.params.subscribe(async value => {
+        await this.setForm(+value['id'])
+      })
+    }
+  }
+
+  private async setForm(id: number){
+    const formValues = this.formPerson.value;
+    const person = await this.personService.findOne(id);
+    formValues.id = person.id;
+    formValues.name = person.name;
+    this.formPerson.setValue({
+      email: person.email,
+      haveToCreateJob: false,
+      id: person.id,
+      name: person.name,
+      newJobName: "",
+      phone: person.phone,
+      profession: person.profession.id.toString()
+    })
+    this.personPreviews.shift();
+    this.personPreviews.push(person)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.personPreviews.push(this.personEdit)
+    const personPreview: PersonEntity = {
+      id: this.formPerson.value.id,
+      email: this.formPerson.value.email,
+      name: this.formPerson.value.name,
+      phone: this.formPerson.value.phone,
+      profession: this.professionsList[this.formPerson.value.profession],
+    }
+    this.personPreviews.push(personPreview)
     this.formPerson.setValue({
-      id: this.personEdit.id,
-      email: this.personEdit.email,
-      name: this.personEdit.name,
-      phone: this.personEdit.phone,
-      profession: this.personEdit.professionId.toString(),
+      id: this.formPerson.value.id,
+      email: this.formPerson.value.email,
+      name: this.formPerson.value.name,
+      phone: this.formPerson.value.phone,
+      profession: this.formPerson.value.profession,
       newJobName: null,
       haveToCreateJob: this.formPerson.value.haveToCreateJob!
     })
   }
 
-  ngOnInit(): void {
-    this.personPreviews.shift();
-    this.professionService.findAll().subscribe(value => this.professionsList = value);
-    if (this.operation.toUpperCase() == "EDIT") {
-
-      this.activatedRoute.params.subscribe(value => this.personService.findOne(+value['id']).subscribe(
-        value => {
-          const formValues = this.formPerson.value;
-          const person = value[0]
-          formValues.id = person.id;
-          formValues.name = person.name;
-          formValues.email = person.email;
-          formValues.phone = person.phone;
-        }
-      ))
-    }
-  }
-
-  onSubmit() {
+  async onSubmit() {
     const formValues = this.formPerson.value;
-    console.log(formValues)
-    const personEntity: PersonEntity = {
+    const personEntity: PersonModel = {
+      id: 0,
       email: formValues.email!, name: formValues.name!, phone: formValues.phone!, professionId: 0
     }
     if (this.formPerson.value.haveToCreateJob) {
-      const professionResponse = this.professionService.create(this.formPerson.value.newJobName!)
+      const professionResponse = await this.professionService.create(this.formPerson.value.newJobName!)
       personEntity.professionId = professionResponse.id
     } else {
-      personEntity.professionId = parseInt(formValues.profession!)
+      personEntity.professionId = parseInt(formValues.profession)
     }
 
     if (this.operation.toUpperCase() == 'EDIT') {
-      personEntity.id = this.personEdit.id;
+      personEntity.id = this.formPerson.value.id;
       this.personService.edit(personEntity);
     } else {
       this.personService.create(personEntity);
